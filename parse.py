@@ -7,7 +7,7 @@ from os import path
 class PredictionParser:
     def __init__(self):
         pass
-    def parse_preds(self, pred_str, threshold=50):
+    def parse_preds(self, pred_str, threshold=.5):
         if type(pred_str) is bytes:
             pred_str = pred_str.decode('utf-8')
         pred_str = pred_str.splitlines()
@@ -20,7 +20,7 @@ class PredictionParser:
                     x for x in re.split('[, ]',pred_str[i+1])
                     if re.search(re.compile('^[0-9]+$'), x)
                 ]
-                if int(info[1]) < threshold:
+                if int(info[1])/100 < threshold:
                     continue
                 obj = {
                     'class': info[0],
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     lines = f.read()
     f.close()
 
-    parsed = p.parse_preds(lines, int(args.threshold))
+    parsed = p.parse_preds(lines, float(args.threshold))
 
     if not args.quiet:
         print(parsed)

@@ -1,11 +1,11 @@
 print("\n\nWelcome to controller\n")
 
-password = ['0', '1', '2', '3']
+password = None
 passwordIndex = 0
 errorCount = 0
 prevGesture = -1
 
-def process(predGesture):
+def unlock(predGesture):
     global password
     global passwordIndex
     global errorCount
@@ -37,9 +37,20 @@ def reset():
     errorCount = 0
     prevGesture = -1
 
-keyFile = open('pwd.txt', 'r')
-keyIn = keyFile.read().splitlines()
+def setPassword():
+    pass
+    #read pfrom sean script
+    
+    #write to password.txt array
+    #hold out hand
+    #take10 pic
 
+def initPassword():
+    global password
+    keyFile = open('pwd.txt', 'r')
+    password = keyFile.read().splitlines()
+
+initPassword()
 testInput = ['0', '0', '0', '1', '2', '1', '2', '3']
 for i in testInput:
-    process(i)
+    unlock(i)
