@@ -1,7 +1,14 @@
 from PIL import Image
 import os
 
-def convertToYolo(imgPath, label):
+def convertToYolo(imgPath, label, subdir):
+    fname = imgPath.split("/")[-1]
+
+    with open("labels/"+subdir+"/"+fname.split(".")[0] + ".txt", "wt") as outfile:    
+        outfile.write(str(label) + " 0 0 1 1")
+    return
+
+
     THRESHOLD = 80
 
     im = Image.open(imgPath)
@@ -57,7 +64,19 @@ def convertToYolo(imgPath, label):
         )  
 
 
-folder = './images'
+folder = './jpg/data_c'
 for filename in os.listdir(folder):
     file_path = os.path.join(folder, filename)
-    convertToYolo(file_path, 1)
+    convertToYolo(file_path, 0, 'data_c')
+
+
+folder = './jpg/data_longhorn'
+for filename in os.listdir(folder):
+    file_path = os.path.join(folder, filename)
+    convertToYolo(file_path, 1, 'data_longhorn')
+
+folder = './jpg/data_palm'
+for filename in os.listdir(folder):
+    file_path = os.path.join(folder, filename)
+    convertToYolo(file_path, 2, 'data_palm')
+
