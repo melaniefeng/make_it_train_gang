@@ -22,6 +22,9 @@ class PredictionParser:
                 ]
                 if int(info[1])/100 < threshold:
                     continue
+                if len(coords) < 4:
+                    coords = [0,0,0,0]
+                
                 obj = {
                     'class': info[0],
                     'confidence': int(info[1]),

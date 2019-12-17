@@ -1,2 +1,5 @@
-bird 0 200
-bird 100 100
+longhorn 455 296
+longhorn 371 273
+palm 800 296
+palm 400 273
+fhrt 800 300

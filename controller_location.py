@@ -3,9 +3,7 @@
 print("\n\nWelcome to controller\n")
 
 def sign(num):
-    if num == 0:
-        return 0
-    elif num < 0:
+    if num < 0:
         return -1
     else:
         return 1
@@ -29,7 +27,7 @@ def unlock(predGesture):
         nextGesture = passwordLoc[passwordIndex][0]
         nextGestureUL_x = passwordLoc[passwordIndex][1]
         nextGestureUL_y = passwordLoc[passwordIndex][2]
-        print(passwordLoc[passwordIndex])
+        print('next password: ', passwordLoc[passwordIndex])
       
         shiftCheck = False
         shiftDir = False
@@ -48,31 +46,34 @@ def unlock(predGesture):
             
             if sign(expShift_x) == sign(currShift_x):
                 if sign(expShift_y) == sign(currShift_y):
-                    print('shiftDir')
+                    print('shift direction correct')
                     shiftDir = True
             #threshold to check if movement is okay
-            if currShift_x <= expShift_x+abs(expShift_x)*.1 and currShift_x >= expShift_x-abs(expShift_x)*.1:
+            if currShift_x <= expShift_x+abs(expShift_x)*.3 and currShift_x >= expShift_x-abs(expShift_x)*.3:
                 print('threshold:',abs(expShift_x)*.1)
-                print('UL ok')
-                if currShift_y <= expShift_y+abs(expShift_y)*.1 and currShift_y >= expShift_y-abs(expShift_y)*.1:
-                    print('BR ok')
+                print('UL within threshold')
+                if currShift_y <= expShift_y+abs(expShift_y)*.3 and currShift_y >= expShift_y-abs(expShift_y)*.3:
+                    print('BR within threshold')
                     shiftCheck = True
+                    shiftDir = True
                 
-        if predGesture[0] == nextGesture and shiftCheck:
+                #change to directional change
+        if predGesture[0] == nextGesture and shiftDir:
             #gesture ID matches, check relative location
-            print('check1', predGesture)
+            print('\n-----checked correct: ', predGesture)
             prevGesture = passwordLoc[passwordIndex]
             prevInputGesture = predGesture
             passwordIndex = passwordIndex + 1
             if passwordIndex == len(password):
-                print('opened')
+                print('\n\n-----opened-----')
                 reset()
                 
-        elif not predGesture[0] == prevGesture[0] or not shiftDir:
+        elif not predGesture[0] == prevGesture[0] and not shiftDir:
             if passwordIndex != 0:
                 errorCount = errorCount + 1
-            print('incorrect')
-            if errorCount > 5:
+            print('\n-----incorrect')
+            print('num error', errorCount)
+            if errorCount > 20:
                 reset()
         
 def reset():
