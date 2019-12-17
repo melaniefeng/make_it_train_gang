@@ -1,10 +1,14 @@
-
 # coding: utf-8
 
-# In[36]:
-
-
 print("\n\nWelcome to controller\n")
+
+def sign(num):
+    if num == 0:
+        return 0
+    elif num < 0:
+        return -1
+    else:
+        return 1
 
 password = None
 passwordIndex = 0
@@ -42,8 +46,8 @@ def unlock(predGesture):
             currShift_y = prevInputGesture[2]-predGesture[2]
             print('current shift', currShift_x, currShift_y)
             
-            if expShift_x/abs(expShift_x) == currShift_x/abs(currShift_x):
-                if expShift_y/abs(expShift_y) == currShift_y/abs(currShift_y):
+            if sign(expShift_x) == sign(currShift_x):
+                if sign(expShift_y) == sign(currShift_y):
                     print('shiftDir')
                     shiftDir = True
             #threshold to check if movement is okay
